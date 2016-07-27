@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
             // params comes from the execute() call: params[0] is the url.
             try {
                 return HttpPost(obj[0]);
+                //통신이 끝난 값
             }
             catch(Exception e) {
                 Log.d("###", e.toString());
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
+        // 화면을 그림
         protected void onPostExecute(JSONObject obj) {
             try {
 //                JSONObject tmp = new JSONObject(obj.get("result"));
@@ -113,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // url, imagename도 obj에
     private JSONObject HttpPost(JSONObject obj) throws IOException {
         try {
             InputStream inputStream = null;
@@ -125,12 +128,17 @@ public class MainActivity extends AppCompatActivity {
             conn.setRequestMethod("POST");
             conn.connect();
 
+            // data 밀어넣기
             OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
             out.write(obj.toString());
             out.close();
 
             // receive response as inputStream
+            // data를 얻어옴
+            // 통신이 끝난 뒤 data를 inputStream에, 순간적으로 끊기는 현상이 발생할 수도 있음
             inputStream = conn.getInputStream();
+
+
 
             // convert inputstream to string
             if(inputStream != null)
